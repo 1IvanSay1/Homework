@@ -6,7 +6,6 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
-
     def rate_lecturer(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached:
             if course in lecturer.grades:
@@ -15,7 +14,6 @@ class Student:
                 lecturer.grades[course] = [grade]
         else:
             return "Ошибка"
-   
     def av_rating(self):
         sum_rating = 0
         len_rating = 0
@@ -24,7 +22,6 @@ class Student:
             len_rating += len(course)
         average_rating = round(sum_rating / len_rating, 2)
         return average_rating
-
     def av_rating_for_course(self, course):
         sum_rating = 0
         len_rating = 0
@@ -34,33 +31,21 @@ class Student:
                 len_rating += len(self.grades[course])
         average_rating = round(sum_rating / len_rating, 2)
         return average_rating               
-
     def __str__(self):
         res = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.av_rating()}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
         return res
-
     def __lt__(self, other):
         if isinstance(other, Student):
             return self.av_rating() < other.av_rating()
-
-
-
-
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
         self.courses_attached = []
-
-
-
-
 class Lecturer(Mentor):
-
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades = {}
-    
     def av_rating(self):
         sum_rating = 0
         len_rating = 0
@@ -69,7 +54,6 @@ class Lecturer(Mentor):
             len_rating += len(course)
         average_rating = round(sum_rating / len_rating, 2)
         return average_rating
-
     def av_rating_for_course(self, course):
         sum_rating = 0
         len_rating = 0
@@ -79,24 +63,17 @@ class Lecturer(Mentor):
                 len_rating += len(self.grades[course])
         average_rating = round(sum_rating / len_rating, 2)
         return average_rating   
-
     def __str__(self):
         res = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.av_rating()}"
         return res
-    
     def __lt__(self, other):
         if not isinstance(other, Lecturer):
             print("Преподователей и студентов между собой не сравнивают!")
             return
         return self.av_rating() < other.av_rating()      
-
-
-
-
 class Reviewer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
-
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
             if course in student.grades:
@@ -105,7 +82,6 @@ class Reviewer(Mentor):
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
-    
     def __str__(self):
         res = f'Имя: {self.name} \nФамилия: {self.surname}'
         return res
@@ -153,7 +129,6 @@ student_2.rate_lecturer(lecturer_2, 'Python', 6)
 student_list = [student_1, student_2]
 lecturer_list = [lecturer_1, lecturer_2]
 reviewer_list = [reviewer_1, reviewer_2]
-
 def average_rating_for_course(course, student_list):
     sum_rating = 0
     quantity_rating = 0
@@ -164,8 +139,6 @@ def average_rating_for_course(course, student_list):
             quantity_rating += 1
     average_rating = round(sum_rating / quantity_rating, 2)
     return average_rating
-
-
 print(average_rating_for_course('Python', student_list))
 print(average_rating_for_course('Python', lecturer_list))
 print(student_1)
